@@ -1,6 +1,16 @@
 #include <Novice.h>
 
 const char kWindowTitle[] = "1102_シュヴェルトライテ";
+
+struct Vector2
+{
+	float x;
+	float y;
+};
+
+
+
+
 // Windowsアプリでのエントリーポイント(main関数)
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
