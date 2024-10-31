@@ -8,6 +8,13 @@ struct Vector2
 	float y;
 };
 
+struct Player
+{
+	Vector2 center;
+	float radius;
+	float width;
+	float speed;
+};
 
 
 
@@ -20,6 +27,16 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	// キー入力結果を受け取る箱
 	char keys[256] = { 0 };
 	char preKeys[256] = { 0 };
+
+
+	Player player =
+	{
+		600.0f,300.0f,16.0f,32.0f,8.0f
+	};
+
+
+
+
 
 	enum Scene
 	{
@@ -87,6 +104,28 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 			}
 			break;
 		case STAGE1://ステージ1
+
+			if (keys[DIK_W])
+			{
+				player.center.y -= player.speed;
+			}
+
+			if (keys[DIK_S])
+			{
+				player.center.y += player.speed;
+			}
+
+			if (keys[DIK_A])
+			{
+				player.center.x -= player.speed;
+			}
+
+			if (keys[DIK_D])
+			{
+				player.center.x += player.speed;
+			}
+
+
 			if (keys[DIK_BACKSPACE] != 0 && preKeys[DIK_BACKSPACE] == 0)// バックスペースキーが押されたらシーンをタイトルに切り替える
 			{
 				scene = TITLE;//タイトル
@@ -97,6 +136,28 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 			}
 			break;
 		case STAGE2://ステージ2
+
+			if (keys[DIK_W])
+			{
+				player.center.y -= player.speed;
+			}
+
+			if (keys[DIK_S])
+			{
+				player.center.y += player.speed;
+			}
+
+			if (keys[DIK_A])
+			{
+				player.center.x -= player.speed;
+			}
+
+			if (keys[DIK_D])
+			{
+				player.center.x += player.speed;
+			}
+
+
 			if (keys[DIK_BACKSPACE] != 0 && preKeys[DIK_BACKSPACE] == 0)// バックスペースキーが押されたらシーンをタイトルに切り替える
 			{
 				scene = TITLE;//タイトル
@@ -145,9 +206,15 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 			break;
 		case STAGE1://ステージ1
 			Novice::DrawSprite(0, 0, stage1, 1.0f, 1.0f, 0.0f, WHITE);
+
+			Novice::DrawBox(static_cast<int>(player.center.x - player.radius), static_cast<int>(player.center.y - player.radius), static_cast<int>(player.width), static_cast<int>(player.width), 0.0f, RED, kFillModeSolid);
+
 			break;
 		case STAGE2://ステージ2
 			Novice::DrawSprite(0, 0, stage2, 1.0f, 1.0f, 0.0f, WHITE);
+
+			Novice::DrawBox(static_cast<int>(player.center.x - player.radius), static_cast<int>(player.center.y - player.radius), static_cast<int>(player.width), static_cast<int>(player.width), 0.0f, RED, kFillModeSolid);
+
 			break;
 		case GAMECLEAR://ゲームクリア
 			Novice::DrawSprite(0, 0, gameClear, 1.0f, 1.0f, 0.0f, WHITE);
