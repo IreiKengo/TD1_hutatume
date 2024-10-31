@@ -1,4 +1,5 @@
 #include <Novice.h>
+#include <math.h>
 
 const char kWindowTitle[] = "1102_シュヴェルトライテ";
 
@@ -12,10 +13,16 @@ struct Player
 {
 	Vector2 center;
 	float radius;
-	float width;
 	float speed;
+	int isAlive;
 };
 
+struct Boss
+{
+	Vector2 center;
+	float radius;
+
+};
 
 
 // Windowsアプリでのエントリーポイント(main関数)
@@ -31,10 +38,13 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 	Player player =
 	{
-		600.0f,300.0f,16.0f,32.0f,8.0f
+		600.0f,300.0f,16.0f,8.0f,true
 	};
 
-
+	Boss boss =
+	{
+		600.0f,150.0f,64.0f
+	};
 
 
 
@@ -50,8 +60,6 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	};
 	int scene = TITLE;
 
-	int titile;//タイトル
-	titile = Novice::LoadTexture("./Resources./images./TD.TITLE.png");
 	int ruru1;//ルール1
 	ruru1 = Novice::LoadTexture("./Resources./images./TD.RURU1.png");
 	int ruru2;//ルール2
@@ -64,6 +72,21 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	gameClear = Novice::LoadTexture("./Resources./images./TD.GAMECLEAR.png");
 	int gameOver;//ゲームオーバー
 	gameOver = Novice::LoadTexture("./Resources./images./TD.GAMEOVER.png");
+
+	int playerGraph = Novice::LoadTexture("./Resources./images./player.png");
+
+	int bossGraph = Novice::LoadTexture("./Resources./images./boss.png");
+
+	int titleGraph = Novice::LoadTexture("./Resources./images./title.png");
+
+	//float x = 0.0f;
+	//float y = 0.0f;
+	//float distance = 0.0f;
+
+
+
+
+
 
 	// ウィンドウの×ボタンが押されるまでループ
 	while (Novice::ProcessMessage() == 0) {
@@ -125,6 +148,31 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 				player.center.x += player.speed;
 			}
 
+			//右
+			if (player.center.x + player.radius >= 1280.0f)
+			{
+				player.center.x = 1280.0f - player.radius;
+			}
+
+			//左
+			if (player.center.x - player.radius <= 0.0f)
+			{
+				player.center.x = player.radius;
+			}
+
+			//下
+			if (player.center.y + player.radius >= 720.0f)
+			{
+				player.center.y = 720.0f - player.radius;
+			}
+
+			//左
+			if (player.center.y - player.radius <= 0.0f)
+			{
+				player.center.y = player.radius;
+			}
+
+
 
 			if (keys[DIK_BACKSPACE] != 0 && preKeys[DIK_BACKSPACE] == 0)// バックスペースキーが押されたらシーンをタイトルに切り替える
 			{
@@ -156,6 +204,36 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 			{
 				player.center.x += player.speed;
 			}
+
+
+
+			//右
+			if (player.center.x + player.radius >= 1280.0f)
+			{
+				player.center.x = 1280.0f - player.radius;
+			}
+
+			//左
+			if (player.center.x - player.radius <= 0.0f)
+			{
+				player.center.x = player.radius;
+			}
+
+			//下
+			if (player.center.y + player.radius >= 720.0f)
+			{
+				player.center.y = 720.0f - player.radius;
+			}
+
+			//左
+			if (player.center.y - player.radius <= 0.0f)
+			{
+				player.center.y = player.radius;
+			}
+
+
+
+
 
 
 			if (keys[DIK_BACKSPACE] != 0 && preKeys[DIK_BACKSPACE] == 0)// バックスペースキーが押されたらシーンをタイトルに切り替える
@@ -196,7 +274,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		switch (scene)
 		{
 		case TITLE://タイトル
-			Novice::DrawSprite(0, 0, titile, 1.0f, 1.0f, 0.0f, WHITE);
+			Novice::DrawSprite(0, 0, titleGraph, 1.0f, 1.0f, 0.0f, WHITE);
 			break;
 		case RURU1://ルール1
 			Novice::DrawSprite(0, 0, ruru1, 1.0f, 1.0f, 0.0f, WHITE);
@@ -207,13 +285,31 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		case STAGE1://ステージ1
 			Novice::DrawSprite(0, 0, stage1, 1.0f, 1.0f, 0.0f, WHITE);
 
-			Novice::DrawBox(static_cast<int>(player.center.x - player.radius), static_cast<int>(player.center.y - player.radius), static_cast<int>(player.width), static_cast<int>(player.width), 0.0f, RED, kFillModeSolid);
+
+			//プレイヤー
+			Novice::DrawSprite(static_cast<int>(player.center.x - player.radius), static_cast<int>(player.center.y - player.radius), playerGraph, 1.0f, 1.0f, 0.0f, WHITE);
+
+
+
+
+			//ボス
+			Novice::DrawSprite(static_cast<int>(boss.center.x - boss.radius), static_cast<int>(boss.center.y - boss.radius), bossGraph, 1.0f, 1.0f, 0.0f, WHITE);
 
 			break;
 		case STAGE2://ステージ2
 			Novice::DrawSprite(0, 0, stage2, 1.0f, 1.0f, 0.0f, WHITE);
 
-			Novice::DrawBox(static_cast<int>(player.center.x - player.radius), static_cast<int>(player.center.y - player.radius), static_cast<int>(player.width), static_cast<int>(player.width), 0.0f, RED, kFillModeSolid);
+			//プレイヤー
+			Novice::DrawSprite(static_cast<int>(player.center.x - player.radius), static_cast<int>(player.center.y - player.radius), playerGraph, 1.0f, 1.0f, 0.0f, WHITE);
+
+			//ボス
+			Novice::DrawSprite(static_cast<int>(boss.center.x - boss.radius), static_cast<int>(boss.center.y - boss.radius), bossGraph, 1.0f, 1.0f, 0.0f, WHITE);
+
+
+
+
+
+
 
 			break;
 		case GAMECLEAR://ゲームクリア
