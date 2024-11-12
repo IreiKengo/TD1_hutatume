@@ -57,7 +57,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 	Boss boss =
 	{
-		600.0f,150.0f,64.0f
+		640.0f,260.0f,64.0f
 	};
 
 	Attack bimu =
@@ -77,7 +77,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 	Idouhani idouhani =
 	{
-		640.0f,400.0f,200.0f,125.0f,5.0f
+		640.0f,450.0f,200.0f,125.0f,5.0f
 	};
 
 	enum Scene
@@ -99,7 +99,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	//ルール2
 	int ruru2 = Novice::LoadTexture("./Resources./images./TD.RURU2.png");
 	//ステージ
-	int stage = Novice::LoadTexture("./Resources./images./TD.STAGE1.png");
+	int stage = Novice::LoadTexture("./Resources./images./stage.png");
 	//ゲームクリア
 	int gameClear = Novice::LoadTexture("./Resources./images./TD.GAMECLEAR.png");
 	//ゲームオーバー
