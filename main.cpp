@@ -29,6 +29,7 @@ struct Attack
 	Vector2 center;
 	float radius;
 	float speed;
+	int timer;
 };
 
 struct Idouhani
@@ -62,17 +63,17 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 	Attack bimu =
 	{
-		100.0f,100.0f,50.0f,5.0f
+		100.0f,100.0f,50.0f,5.0f,60
 	};
 
 	Attack kaminari =
 	{
-		300.0f,300.0f,50.0f,5.0f
+		300.0f,300.0f,50.0f,5.0f,30
 	};
 
 	Attack ken =
 	{
-		500.0f,100.0f,50.0f,5.0f
+		500.0f,100.0f,50.0f,5.0f,10
 	};
 
 	Idouhani idouhani =
@@ -91,6 +92,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 	};
 	int scene = TITLE;
+
+
 
 	//タイトル
 	int titleGraph = Novice::LoadTexture("./Resources./images./title.png");
@@ -120,9 +123,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	//移動範囲
 	int idouhaniGraph = Novice::LoadTexture("./Resources./images./idouhani.png");
 
-	//float x = 0.0f;
-	//float y = 0.0f;
-	//float distance = 0.0f;
+	
 
 
 
@@ -168,6 +169,10 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 			}
 			break;
 		case STAGE://ステージ
+
+
+
+
 
 			if (keys[DIK_W])
 			{
@@ -217,10 +222,6 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 
 
-
-
-
-
 			if (keys[DIK_1] != 0 && preKeys[DIK_1] == 0)// 1キーが押されたらシーンをゲームクリアに切り替える
 			{
 				scene = GAMECLEAR;//ゲームクリア
@@ -231,6 +232,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 				scene = GAMEOVER;//ゲームオーバー
 			}
 			break;
+
+
+
 		case GAMECLEAR://ゲームクリア
 			if (keys[DIK_RETURN] != 0 && preKeys[DIK_RETURN] == 0)// バックスペースキーが押されたらシーンをタイトルに切り替える
 			{
