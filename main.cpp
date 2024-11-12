@@ -29,6 +29,7 @@ struct Attack
 	Vector2 center;
 	float radius;
 	float speed;
+	int isShot;
 	int timer;
 };
 
@@ -61,20 +62,28 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		640.0f,260.0f,64.0f
 	};
 
-	Attack bimu =
+	Attack bimu[7] = {};
+	for (int i = 0; i < 7; i++)
 	{
-		100.0f,100.0f,50.0f,5.0f,60
-	};
+		bimu[i] = { 100.0f,100.0f,50.0f,5.0f,false,60 };
+	}
+	
 
-	Attack kaminari =
+	Attack kaminari[7] = {};
+	for (int i = 0; i < 7; i++)
 	{
-		300.0f,300.0f,50.0f,5.0f,30
-	};
+		kaminari[i] = { 300.0f,300.0f,50.0f,5.0f,false,30 };
+		
+	}
+	
+	
 
-	Attack ken =
+	Attack ken[7] = {};
+	for (int i = 0; i < 7; i++)
 	{
-		500.0f,100.0f,50.0f,5.0f,10
-	};
+		ken[i] = { 500.0f,100.0f,50.0f,5.0f,false, 10 };
+	}
+	
 
 	Idouhani idouhani =
 	{
@@ -114,11 +123,28 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	int bossGraph = Novice::LoadTexture("./Resources./images./boss.png");
 
 	//ビーム
-	int bimuGraph = Novice::LoadTexture("./Resources./images./bi-mu.png");
+
+	int bimuGraph[7] = {};
+	for (int i = 0; i < 7; i++)
+	{
+		bimuGraph[i] = Novice::LoadTexture("./Resources./images./bi-mu.png");
+	}
+	
 	//雷
-	int kaminariGraph = Novice::LoadTexture("./Resources./images./kaminari.png");
+	int kaminariGraph[7] = {};
+	for (int i = 0; i < 7; i++)
+	{
+		kaminariGraph[i] = Novice::LoadTexture("./Resources./images./kaminari.png");
+	}
+	
 	//剣
-	int kenGraph = Novice::LoadTexture("./Resources./images./ken.png");
+
+	int kenGraph[7] = {};
+	for (int i = 0; i < 7; i++)
+	{
+		kenGraph[i] = Novice::LoadTexture("./Resources./images./ken.png");
+	}
+	
 
 	//移動範囲
 	int idouhaniGraph = Novice::LoadTexture("./Resources./images./idouhani.png");
@@ -279,14 +305,28 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 			//ボス
 			Novice::DrawSprite(static_cast<int>(boss.center.x - boss.radius), static_cast<int>(boss.center.y - boss.radius), bossGraph, 1.0f, 1.0f, 0.0f, WHITE);
 
+
+			//攻撃の順番 剣＞雷＞ビーム＞全部
+
 			//ビーム
-			Novice::DrawSprite(static_cast<int>(bimu.center.x - bimu.radius), static_cast<int>(bimu.center.y - bimu.radius), bimuGraph, 1.0f, 1.0f, 0.0f, WHITE);
+			for (int i = 0; i < 7; i++)
+			{
+			Novice::DrawSprite(static_cast<int>(bimu[i].center.x - bimu[i].radius), static_cast<int>(bimu[i].center.y - bimu[i].radius + i * 50), bimuGraph[i], 1.0f, 1.0f, 0.0f, WHITE);
+
+			}
 
 			//雷
-			Novice::DrawSprite(static_cast<int>(kaminari.center.x - kaminari.radius), static_cast<int>(kaminari.center.y - kaminari.radius), kaminariGraph, 1.0f, 1.0f, 0.0f, WHITE);
+			for (int i = 0; i < 7; i++)
+			{
+				Novice::DrawSprite(static_cast<int>(kaminari[i].center.x - kaminari[i].radius + i * 50), static_cast<int>(kaminari[i].center.y - kaminari[i].radius), kaminariGraph[i], 1.0f, 1.0f, 0.0f, WHITE);
+
+			}
 
 			//剣
-			Novice::DrawSprite(static_cast<int>(ken.center.x - ken.radius), static_cast<int>(ken.center.y - ken.radius), kenGraph, 1.0f, 1.0f, 0.0f, WHITE);
+			for (int i = 0; i < 7; i++)
+			{
+				Novice::DrawSprite(static_cast<int>(ken[i].center.x - ken[i].radius + i * 50), static_cast<int>(ken[i].center.y - ken[i].radius), kenGraph[i], 1.0f, 1.0f, 0.0f, WHITE);
+			}
 
 			//移動範囲
 			Novice::DrawSprite(static_cast<int>(idouhani.center.x - idouhani.radius.x), static_cast<int>(idouhani.center.y - idouhani.radius.y), idouhaniGraph, 1.0f, 1.0f, 0.0f, WHITE);
