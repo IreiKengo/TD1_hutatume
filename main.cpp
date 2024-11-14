@@ -67,23 +67,33 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	{
 		bimu[i] = { 100.0f,100.0f,50.0f,5.0f,false,60 };
 	}
-	
+
 
 	Attack kaminari[7] = {};
 	for (int i = 0; i < 7; i++)
 	{
 		kaminari[i] = { 300.0f,300.0f,50.0f,5.0f,false,30 };
-		
+
 	}
-	
-	
+
+
 
 	Attack ken[7] = {};
 	for (int i = 0; i < 7; i++)
 	{
 		ken[i] = { 500.0f,100.0f,50.0f,5.0f,false, 10 };
 	}
-	
+
+
+	float x = 0.0f;
+	float y = 0.0f;
+	float l = 0.0f;
+
+	int timer = 90;
+
+
+
+
 
 	Idouhani idouhani =
 	{
@@ -129,14 +139,14 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	{
 		bimuGraph[i] = Novice::LoadTexture("./Resources./images./bi-mu.png");
 	}
-	
+
 	//雷
 	int kaminariGraph[7] = {};
 	for (int i = 0; i < 7; i++)
 	{
 		kaminariGraph[i] = Novice::LoadTexture("./Resources./images./kaminari.png");
 	}
-	
+
 	//剣
 
 	int kenGraph[7] = {};
@@ -144,12 +154,12 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	{
 		kenGraph[i] = Novice::LoadTexture("./Resources./images./ken.png");
 	}
-	
+
 
 	//移動範囲
 	int idouhaniGraph = Novice::LoadTexture("./Resources./images./idouhani.png");
 
-	
+
 
 
 
@@ -248,6 +258,50 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 
 
+			//追尾団
+
+			for (int i = 0; i < 7; i++)
+			{
+				ken[i].center.x += x;
+				ken[i].center.y += y;
+			}
+
+			if (timer != 0)
+			{
+				timer -= 1;
+			}
+
+
+
+
+			for (int i = 0; i < 7; i++)
+			{
+
+				if (timer != 0)
+				{
+					x = player.center.x - ken[i].center.x;
+					y = player.center.y - ken[i].center.y;
+					l = sqrtf(x * x + y * y);
+					x = x / l;
+					y = y / l;
+					x = x * ken[i].speed;
+					y = y * ken[i].speed;
+
+				}
+			}
+
+
+
+
+
+
+
+
+
+
+
+
+
 			if (keys[DIK_1] != 0 && preKeys[DIK_1] == 0)// 1キーが押されたらシーンをゲームクリアに切り替える
 			{
 				scene = GAMECLEAR;//ゲームクリア
@@ -258,7 +312,6 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 				scene = GAMEOVER;//ゲームオーバー
 			}
 			break;
-
 
 
 		case GAMECLEAR://ゲームクリア
@@ -311,7 +364,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 			//ビーム
 			for (int i = 0; i < 7; i++)
 			{
-			Novice::DrawSprite(static_cast<int>(bimu[i].center.x - bimu[i].radius), static_cast<int>(bimu[i].center.y - bimu[i].radius + i * 50), bimuGraph[i], 1.0f, 1.0f, 0.0f, WHITE);
+				Novice::DrawSprite(static_cast<int>(bimu[i].center.x - bimu[i].radius), static_cast<int>(bimu[i].center.y - bimu[i].radius + i * 50), bimuGraph[i], 1.0f, 1.0f, 0.0f, WHITE);
 
 			}
 
@@ -325,12 +378,13 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 			//剣
 			for (int i = 0; i < 7; i++)
 			{
-				Novice::DrawSprite(static_cast<int>(ken[i].center.x - ken[i].radius + i * 50), static_cast<int>(ken[i].center.y - ken[i].radius), kenGraph[i], 1.0f, 1.0f, 0.0f, WHITE);
+				Novice::DrawSprite(static_cast<int>(ken[i].center.x - ken[i].radius + i * 50), static_cast<int>(ken[i].center.y - ken[i].radius), kenGraph[i], 1.0f, 1.0f, 3.2f, WHITE);
 			}
 
 			//移動範囲
 			Novice::DrawSprite(static_cast<int>(idouhani.center.x - idouhani.radius.x), static_cast<int>(idouhani.center.y - idouhani.radius.y), idouhaniGraph, 1.0f, 1.0f, 0.0f, WHITE);
 
+			Novice::ScreenPrintf(10, 10, "%d", timer);
 
 			break;
 		case GAMECLEAR://ゲームクリア
