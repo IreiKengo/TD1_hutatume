@@ -378,7 +378,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 			//剣
 			for (int i = 0; i < 7; i++)
 			{
-				Novice::DrawSprite(static_cast<int>(ken[i].center.x - ken[i].radius + i * 50), static_cast<int>(ken[i].center.y - ken[i].radius), kenGraph[i], 1.0f, 1.0f, 3.2f, WHITE);
+				Novice::DrawSprite(static_cast<int>(ken[i].center.x - ken[i].radius), static_cast<int>(ken[i].center.y - ken[i].radius), kenGraph[i], 1.0f, 1.0f, 3.2f, WHITE);
 			}
 
 			//移動範囲
